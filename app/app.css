@@ -23,13 +23,17 @@
     color: #d6d5d8;
 }
 
-.app-body-container .welcome-msg {
+.app-body-container .app-messages-container {
     margin: 40 0 25 0;
+}
+
+.app-body-container .welcome-msg {
     font-family: OpenSans-Light;
     font-size: 25;
 }
 
 .app-body-container .registration-msg {
+    margin-top: 30;
     font-family: OpenSans-Regular;
     font-size: 22;
 }
@@ -48,4 +52,23 @@
     overflow: hidden;
     border-width: 0;
     outline: none;
+}
+
+.app-body-container .new-notification-label {
+    margin-top: 20;
+    font-size: 30;
+}
+
+.app-body-container .notificationMsg {
+    margin-top: 40;
+    font-size: 20;
+}
+
+.app-body-container .timestamp-label {
+    margin-top: 40;
+}
+
+.app-body-container .timestamp {
+    width: 50%;
+    margin-bottom: 40;
 }

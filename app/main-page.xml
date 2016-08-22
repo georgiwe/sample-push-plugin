@@ -5,13 +5,21 @@
 			<Label text="by Telerik Backend Services" cssClass="heading-subtitle" />
 		</StackLayout>
 
-        <Label text="{{headerText}}" cssClass="welcome-msg" textWrap="true"/>
+        <StackLayout cssClass="app-messages-container" visibility="{{ notificationMsg ? 'collapsed' : 'visible' }}">
+            <Label text="{{ headerText }}" cssClass="welcome-msg" textWrap="true" visibility="{{ isLoading ? 'collapsed' : 'visible' }}"/>
+            <Label text="{{ registrationMessage }}" cssClass="registration-msg" textWrap="true"/>
+            
+            <ActivityIndicator col="2" busy="{{ isLoading }}" horizontalAlignment="center" cssClass="loading-indicator" />
+        </StackLayout>
+        
+        <StackLayout visibility="{{ notificationMsg ? 'visible' : 'collapsed' }}">
+            <Label text="New push message received:" cssClass="new-notification-label" textWrap="true"/>
+            <Label text="{{ notificationMsg }}" cssClass="notificationMsg" textWrap="true"/>
+            
+            <Label text="Received on:" cssClass="timestamp-label" textWrap="true" />
+            <Label text="{{ notificationMsgTimestamp }}" cssClass="timestamp" textWrap="true" />
+        </StackLayout>
 
-        <Label text="{{ registrationMessage }}" cssClass="registration-msg" textWrap="true"/>
-        <ActivityIndicator col="2" busy="{{ isLoading }}" horizontalAlignment="center" cssClass="loading-indicator" />
-
-        <Button text="{{ buttonText }}" tap="{{ registrationTapAction }}" cssClass="registration-btn"/>
-
-        <Label text="{{ pushMessage }}" cssClass="push-msg" textWrap="true"/>
+        <Button text="{{ buttonText }}" tap="{{ registrationTapAction }}" cssClass="registration-btn" visibility="{{ isLoading ? 'collapsed' : 'visible' }}"/>
     </StackLayout>
 </Page>

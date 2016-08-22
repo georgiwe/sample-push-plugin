@@ -7,7 +7,6 @@ var __extends = this.__extends || function (d, b) {
 var observable = require("data/observable");
 var pushPlugin = require('nativescript-push-notifications');
 
-var dialogs = require("ui/dialogs");
 var Everlive = require('./lib/everlive.js');
 
 var MainViewModel = (function (_super) {
@@ -61,7 +60,7 @@ var MainViewModel = (function (_super) {
         self._unregisterDeviceSuccess = function() {
             self.isDeviceRegistered = false;
             self.disableButton = false;
-            self.set("isLoading",false);
+            self.set("isLoading", false);
 
             self.set("buttonText", "Enable Notifications");
             self.set("headerText", "Device unregistered successfully!");
@@ -88,72 +87,55 @@ var MainViewModel = (function (_super) {
                 alert: true
             },
             notificationCallbackIOS: function(userInfo) {
-                //Show a dialog with the push notification
-                dialogs.alert({
-                    title: "Push Notification",
-                    message: JSON.stringify(userInfo.alert),
-                    okButtonText: "OK"
-                }).then(function () {
-                    console.log("Dialog closed!");
-                });            
+                self.showReceivedPushMessage(JSON.stringify(userInfo.alert));
             },
             //Android - specific settings
             android: {
                 projectNumber: '<ENTER_YOUR_PROJECT_NUMBER>'
             },
             notificationCallbackAndroid: function callback(data) {
-                //Show a dialog with the push notification
                 //Remove undeeded quotes
                 var message = JSON.stringify(data);
-                if (message.charAt(0) === '"' && message.charAt(message.length -1) === '"') {
-                    message = message.substr(1,message.length -2);
+                if (message.charAt(0) === '"' && message.charAt(message.length - 1) === '"') {
+                    message = message.substr(1, message.length - 2);
                 }
                 
-                dialogs.alert({
-                    title: "Push Notification",
-                    message: message,
-                    okButtonText: "OK"
-                }).then(function () {
-                    console.log("Dialog closed!");
-                });
+                self.showReceivedPushMessage(message);
             }
         };
     }
 
     MainViewModel.prototype.registerDevice = function () {
-        var self = this;
-
-        //Adjust button and text message
-        self.set("buttonText", "Loading...");
-        self.set("registrationMessage", "Registering device...");
-        self.set("isLoading",true);
-        self.disableButton = true;
+        this.set("buttonText", "Loading...");
+        this.set("registrationMessage", "Registering device...");
+        this.set("isLoading", true);
+        this.disableButton = true;
 
         //Call the everlive register for push method
-        self.everlive.push.register(self.pushSettings, self._deviceRegistrationSuccess, self._deviceRegistrationError);
+        this.everlive.push.register(this.pushSettings, this._deviceRegistrationSuccess, this._deviceRegistrationError);
     };
 
     MainViewModel.prototype.unregisterDevice = function () {
-        var self = this;
+        this.set("buttonText", "Loading...");
+        this.set("registrationMessage", "Unregistering device...");
 
-        self.set("buttonText", "Loading...");
-        self.set("registrationMessage", "Unregistering device...");
+        this.set("isLoading",true);
+        this.disableButton = true;
 
-        self.set("isLoading",true);
-        self.disableButton = true;
-
-        self.everlive.push.unregister(self._unregisterDeviceSuccess, self._unregisterDeviceError);
+        this.everlive.push.unregister(this._unregisterDeviceSuccess, this._unregisterDeviceError);
     };
 
     MainViewModel.prototype.registrationTapAction = function () {
-        var self = this;
-        if (!self.isLoading) {
-            if (self.isDeviceRegistered) {
-                self.unregisterDevice();
-            } else {
-                self.registerDevice();
-            }
+        this.set('notificationMsg', false);
+        if (!this.isLoading) {
+            var updateDeviceRegistration = this.isDeviceRegistered ? this.unregisterDevice : this.registerDevice;
+            updateDeviceRegistration.call(this);
         }
+    };
+
+    MainViewModel.prototype.showReceivedPushMessage = function (message) {
+        this.set('notificationMsg', message);
+        this.set('notificationMsgTimestamp', new Date().toLocaleString());
     };
 
     return MainViewModel;
