@@ -14,7 +14,7 @@
         
         <StackLayout visibility="{{ notificationMsg ? 'visible' : 'collapsed' }}">
             <Label text="New push message received:" cssClass="new-notification-label" textWrap="true"/>
-            <Label text="{{ notificationMsg }}" cssClass="notificationMsg" textWrap="true"/>
+            <Label text="{{ notificationMsg }}" cssClass="notification-msg" textWrap="true"/>
             
             <Label text="Received on:" cssClass="timestamp-label" textWrap="true" />
             <Label text="{{ notificationMsgTimestamp }}" cssClass="timestamp" textWrap="true" />

@@ -59,8 +59,8 @@
     font-size: 30;
 }
 
-.app-body-container .notificationMsg {
-    margin-top: 40;
+.app-body-container .notification-msg {
+    margin-top: 30;
     font-size: 20;
 }
 
@@ -68,7 +68,6 @@
     margin-top: 40;
 }
 
-.app-body-container .timestamp {
-    width: 50%;
-    margin-bottom: 40;
+.app-body-container .timestamp { 
+    margin-bottom: 20;
 }

@@ -4,10 +4,9 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var observable = require("data/observable");
-var pushPlugin = require('nativescript-push-notifications');
 
-var Everlive = require('./lib/everlive.js');
+var observable = require("data/observable");
+var Everlive = require('everlive-sdk');
 
 var MainViewModel = (function (_super) {
     __extends(MainViewModel, _super);
@@ -134,6 +133,10 @@ var MainViewModel = (function (_super) {
     };
 
     MainViewModel.prototype.showReceivedPushMessage = function (message) {
+        if (message.length > 150) {
+            message = message.substring(0, 150) + '...';
+        }
+        
         this.set('notificationMsg', message);
         this.set('notificationMsgTimestamp', new Date().toLocaleString());
     };
