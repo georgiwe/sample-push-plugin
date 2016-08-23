@@ -14,7 +14,7 @@ var MainViewModel = (function (_super) {
         var self = this;
 
 		self.everlive = new Everlive({
-			appId: '<ENTER_YOUR_API_KEY_HERE>',
+			appId: 'o2jd0k7jrb1oiysd',
 			scheme: 'https'
 		});
 
@@ -90,7 +90,7 @@ var MainViewModel = (function (_super) {
             },
             //Android - specific settings
             android: {
-                projectNumber: '<ENTER_YOUR_PROJECT_NUMBER>'
+                projectNumber: '882461189367'
             },
             notificationCallbackAndroid: function callback(data) {
                 //Remove undeeded quotes
